@@ -15,8 +15,4 @@ public class PasswordEncryptor {
 	public PasswordEncrypted encrypt(Password password) {
 		return new PasswordEncrypted(passwordEncoder.encode(password.getValue()));
 	}
-
-	public boolean matches(Password password, PasswordEncrypted passwordEncrypted) {
-		return passwordEncoder.matches(password.getValue(), passwordEncrypted.getValue());
-	}
 }

@@ -16,6 +16,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import pl.teardrop.authentication.jwt.exception.ExpiredJwtTokenException;
 import pl.teardrop.authentication.jwt.exception.FailedRetrievingAuthorizationToken;
 import pl.teardrop.authentication.jwt.exception.InvalidJwtTokenException;
+import pl.teardrop.authentication.user.domain.CustomUserDetails;
 import pl.teardrop.authentication.user.domain.User;
 import pl.teardrop.authentication.user.domain.UserId;
 import pl.teardrop.authentication.user.service.UserService;
@@ -67,10 +68,12 @@ public class JwtFilter extends OncePerRequestFilter {
 		}
 		User user = userOpt.get();
 
+		CustomUserDetails userDetails = new CustomUserDetails(user);
+
 		final UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
 				user,
 				null,
-				user.getAuthorities()
+				userDetails.getAuthorities()
 		);
 
 		SecurityContextHolder.getContext().setAuthentication(auth);
